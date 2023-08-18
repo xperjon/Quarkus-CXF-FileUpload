@@ -1,0 +1,66 @@
+<wsdl:definitions name = "FileService"
+   targetNamespace = "http://server.it.cxf.quarkiverse.io/"
+   xmlns:wsdl = "http://schemas.xmlsoap.org/wsdl/"
+   xmlns:soap = "http://schemas.xmlsoap.org/wsdl/soap/"
+   xmlns:tns = "http://server.it.cxf.quarkiverse.io/"
+   xmlns:xsd = "http://www.w3.org/2001/XMLSchema">
+   
+   <wsdl:types>
+   <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://server.it.cxf.quarkiverse.io/" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://server.it.cxf.quarkiverse.io/">
+
+   <xsd:element name="upload" type="tns:upload"/>   
+   <xsd:complexType name="upload">
+       <xsd:sequence>
+           <xsd:element minOccurs="0" name="filename" type="xsd:string"/>
+           <xsd:element minOccurs="0" name="data" type="xsd:base64Binary"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="uploadResponse" type="tns:uploadResponse"/>
+   <xsd:complexType name="uploadResponse">
+     <xsd:sequence>
+       <xsd:element minOccurs="0" name="size" type="xsd:int"/>
+     </xsd:sequence>
+   </xsd:complexType>
+ </xsd:schema>
+</wsdl:types>
+
+   <wsdl:message name = "upload">
+      <wsdl:part element="tns:upload" name = "parameters"></wsdl:part>
+   </wsdl:message >
+
+   <wsdl:message name = "uploadResponse">
+    <wsdl:part element="tns:uploadResponse" name = "parameters"></wsdl:part>
+ </wsdl:message >
+
+
+   <wsdl:portType name = "FileService">
+      <wsdl:operation name = "uploadFile">
+         <wsdl:input message = "tns:upload" name="upload"/>
+         <wsdl:output message = "tns:uploadResponse" name="uploadResponse"/>
+      </wsdl:operation>
+   </wsdl:portType>
+
+   <wsdl:binding name = "FileServiceSoapBinding" type = "tns:FileService">
+      <soap:binding style = "document"
+         transport = "http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name = "uploadFile">
+         <soap:operation soapAction = "" style="document"/>
+         <wsdl:input name="upload">
+            <soap:body use="literal"/>
+         </wsdl:input>
+		
+         <wsdl:output name="uploadResponse">
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+
+   <wsdl:service name = "FileService">
+      <wsdl:documentation>WSDL File for FileService</wsdl:documentation>
+      <wsdl:port binding = "tns:FileServiceSoapBinding" name = "File">
+         <soap:address
+            location = "http://localhost:8080/FileService" />
+      </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>
