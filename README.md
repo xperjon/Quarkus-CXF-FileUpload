@@ -8,7 +8,7 @@ Start server
 ```
 cd file-service
 mvn clean package
-quakus dev
+mvn quakus:dev
 ```
 
 
@@ -16,7 +16,7 @@ Start client
 ```
 cd file-client
 mvn clean package
-quakus dev
+mvn quakus:dev
 ```
 
 
